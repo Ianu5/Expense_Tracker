@@ -28,18 +28,26 @@ def main():
             expense = get_expense()
             # Add the expense to the list of expenses
             update_expenses(expenses, expense)
+            write_expense_to_file(expenses)
 
         # Show history when user chosses 2
         elif response == "2":
             show_history(expenses)
 
         # Exit the program if user chooses 3
-        if response == "3":
+        elif response == "3":
             print("Exiting the Program")
-            with open ('expenses.json', 'w') as file:
-                json.dump(expenses, file, indent=2)
             break
 
+        user_input = input("Do you want to continue? " 
+                           "(Continue: (yes/y) "
+                           "| Exit: (any key)) ")
+        if user_input.lower() in ['yes', 'y']:
+            print("\n")
+            continue
+        else:
+            print("Exiting the program...")
+            break       
 
 def get_response_for_menu():
     # Render a menu for the user to choose from
@@ -83,6 +91,11 @@ def get_expense():
 def update_expenses(expenses, expense):
     # Add data to the expenses list
     expenses.append(expense.__dict__)
+
+def write_expense_to_file(expenses):
+    with open ('expenses.json', 'w') as file:
+        json.dump(expenses, file, indent=2)
+
 
 def show_history(expenses):
     print("\n---------------------------\n    Your expenses\n")
