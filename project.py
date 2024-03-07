@@ -49,17 +49,22 @@ def main():
 def get_response_for_menu():
     # Render a menu for the user to choose from
     print("""
-1. Add an expense
-2. Show expense history
-3. Quit
-            """)
+---------------------------- 
+|           Menu           |
+----------------------------
+|                          |
+|  1. Add an expense       |
+|  2. Show expense history |
+|  3. Quit                 |
+|__________________________|
+           """)
     return input("Your choice: ")
     
 def viable_user_input(response):
     # Check if the user chose a viable option
     # Converting the string response to integer
     try:
-        int(response)
+        response = int(response)
     except ValueError:
         return False
     
@@ -117,7 +122,6 @@ def ask_for_continuation():
 
 def user_continue(user_input):
     if user_input.lower() in ['yes', 'y']:
-        print("\n")
         return True
     else:
         print("Exiting the program...")
