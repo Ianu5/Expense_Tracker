@@ -39,15 +39,12 @@ def main():
             print("Exiting the Program")
             break
 
-        user_input = input("Do you want to continue? " 
-                           "(Continue: (yes/y) "
-                           "| Exit: (any key)) ")
-        if user_input.lower() in ['yes', 'y']:
-            print("\n")
+        # Find out if the user wants to continue
+        user_input = ask_for_continuation()
+        if user_continue(user_input):
             continue
         else:
-            print("Exiting the program...")
-            break       
+            break
 
 def get_response_for_menu():
     # Render a menu for the user to choose from
@@ -56,12 +53,17 @@ def get_response_for_menu():
 2. Show expense history
 3. Quit
             """)
-    response = input("Your choice: ")
-    return response
+    return input("Your choice: ")
     
 def viable_user_input(response):
     # Check if the user chose a viable option
-    valid_input = ['1', '2', '3']
+    # Converting the string response to integer
+    try:
+        int(response)
+    except ValueError:
+        return False
+    
+    valid_input = [1, 2, 3]
     if response in valid_input:
         return True
     else:
@@ -82,8 +84,8 @@ def get_data_from_existing_file():
 
 def get_expense():
     # Prompt the user for the spending, date and category of spending
-    amount = input("Amount spent: ")
-    category = input("Reason for spending: ")
+    amount = "{:2f}".format(float(input("Amount spent: ")))
+    category = input("Reason for spending: ").title()
     date = input("Date of expense: ")
     expense = Expense(amount, category, date)
     return expense
@@ -107,6 +109,20 @@ def show_history(expenses):
     """)
     print("---------------------------")
 
+def ask_for_continuation():
+    question = "Do you want to continue?"
+    question += " (Continue: (yes/y)"
+    question += " | Exit: (any key)) "
+    return input(question)
+
+def user_continue(user_input):
+    if user_input.lower() in ['yes', 'y']:
+        print("\n")
+        return True
+    else:
+        print("Exiting the program...")
+        return False
+    
 
 if __name__ == "__main__":
     main()
