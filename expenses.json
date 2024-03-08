@@ -3,5 +3,10 @@
     "amount": "123",
     "category": "lululala",
     "date": "04.03.23"
+  },
+  {
+    "amount": "15.660000",
+    "category": "Test",
+    "date": "80.03214"
   }
 ]

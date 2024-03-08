@@ -33,6 +33,7 @@ def main():
         # Show history when user chosses 2
         elif response == "2":
             show_history(expenses)
+            continue
 
         # Exit the program if user chooses 3
         elif response == "3":
@@ -105,14 +106,13 @@ def write_expense_to_file(expenses):
 
 
 def show_history(expenses):
-    print("\n---------------------------\n    Your expenses\n")
+    print("\n----------------------------\n    Your expenses\n")
     for expense in expenses:
         print(f"""
     date: {expense['date']}
     amount: {expense['amount']}
     category: {expense['category']}
     """)
-    print("---------------------------")
 
 def ask_for_continuation():
     question = "Do you want to continue?"
