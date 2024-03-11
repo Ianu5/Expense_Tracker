@@ -4,4 +4,6 @@ class Expense:
         self.amount = amount
         self.category = category
         self.date = date
-        
+
+    def __repr__(self):
+        return f'Expense: {self.amount!r} Date: {self.date!r} Category: {self.category!r}'

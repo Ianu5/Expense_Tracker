@@ -21,14 +21,21 @@ def main():
         if not viable_user_input(response):
             print(f"{response} is not a viable option. Choose 1-3")
             continue
-
-        # When the user chooses 1 add an expense
-        if response == "1":
-            # Prompt the user for their expense
-            expense = get_expense()
-            # Add the expense to the list of expenses
-            update_expenses(expenses, expense)
-            write_expense_to_file(expenses)
+        
+        # If the response is 1 start a loop to prompt the user for expenses
+        if response == '1':
+        # the user for expenses
+            while True:
+                # Prompt the user for their expense
+                expense = get_expense()
+                # Add the expense to the list of expenses
+                update_expenses(expenses, expense)
+                write_expense_to_file(expenses)
+                prompt = input('Enter "n" to stop adding expenses'
+                               ' press "enter" to continue')
+                if prompt == 'n':
+                    break
+            continue
 
         # Show history when user chosses 2
         elif response == "2":
@@ -90,29 +97,32 @@ def get_data_from_existing_file():
 
 def get_expense():
     # Prompt the user for the spending, date and category of spending
-    amount = "{:2f}".format(float(input("Amount spent: ")))
+    # Format the expense amount with 2 after period digits
+    amount = "{:.2f}".format(float(input("Amount spent: ")))
     category = input("Reason for spending: ").title()
     date = input("Date of expense: ")
+    # Initialize an object from the expense class
     expense = Expense(amount, category, date)
     return expense
 
 def update_expenses(expenses, expense):
-    # Add data to the expenses list
+    # Add data to the expenses list in form of a dictionary
     expenses.append(expense.__dict__)
 
 def write_expense_to_file(expenses):
+    # Write the added expense to the expenses file
     with open ('expenses.json', 'w') as file:
         json.dump(expenses, file, indent=2)
 
 
 def show_history(expenses):
-    print("\n----------------------------\n    Your expenses\n")
+    print('\n--------------------------------------------------------------------------\n'
+          '                        Your expenses\n')
+    # Print out all expenses the user added in a better format
     for expense in expenses:
-        print(f"""
-    date: {expense['date']}
-    amount: {expense['amount']}
-    category: {expense['category']}
-    """)
+        for key, value in expense.items():
+            print(f'{key.title()}: {value} ', end='')
+        print()
 
 def ask_for_continuation():
     question = "Do you want to continue?"
