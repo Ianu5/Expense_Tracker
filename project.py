@@ -1,6 +1,7 @@
 import sys
 import os
 import json
+import re
 from classes import Expense
 
 def main():
@@ -27,13 +28,16 @@ def main():
         # the user for expenses
             while True:
                 # Prompt the user for their expense
-                expense = get_expense()
+                amount, category, date = get_amount_category_date()
+                expense = Expense(amount, category, date)
+
                 # Add the expense to the list of expenses
                 update_expenses(expenses, expense)
                 write_expense_to_file(expenses)
-                prompt = input('Enter "n" to stop adding expenses'
-                               ' press "enter" to continue')
-                if prompt == 'n':
+
+                # Ask the user if he wants to continue adding expenses
+                prompt = ask_for_continuation()
+                if not user_continue(prompt):
                     break
             continue
 
@@ -44,14 +48,7 @@ def main():
 
         # Exit the program if user chooses 3
         elif response == "3":
-            print("Exiting the Program")
-            break
-
-        # Find out if the user wants to continue
-        user_input = ask_for_continuation()
-        if user_continue(user_input):
-            continue
-        else:
+            print("Exiting the Program...")
             break
 
 def get_response_for_menu():
@@ -77,17 +74,11 @@ def viable_user_input(response):
         return False
     
     valid_input = [1, 2, 3]
-    if response in valid_input:
-        return True
-    else:
-        return False
+    return bool(response in valid_input)
 
 def file_exists():
     # Check if a expenses.json file exists 
-    if os.path.exists('expenses.json'):
-        return True
-    else:
-        return False
+    return bool(os.path.exists('expenses.json'))
 
 def get_data_from_existing_file():
     # Open expenses file and read data into a list
@@ -95,15 +86,29 @@ def get_data_from_existing_file():
             expenses = json.load(file)
     return expenses
 
-def get_expense():
+def get_amount_category_date():
     # Prompt the user for the spending, date and category of spending
     # Format the expense amount with 2 after period digits
-    amount = "{:.2f}".format(float(input("Amount spent: ")))
+    while True:
+        try:
+            amount = "{:.2f}".format(float(input("Amount spent: ")))
+            break
+        except ValueError:
+            print("Invalid Input. Input a digits with maximum two decimals")
+            continue
+
     category = input("Reason for spending: ").title()
-    date = input("Date of expense: ")
-    # Initialize an object from the expense class
-    expense = Expense(amount, category, date)
-    return expense
+
+    while True:
+        date = input("Date of expense: ")
+        found_pattern = re.search(r'^\d{4}/\d{2}/\d{2}$', date)
+        if found_pattern:
+            break
+        else:
+            print("Input format: YYYY/MM/DD")
+            continue
+
+    return amount, category, date
 
 def update_expenses(expenses, expense):
     # Add data to the expenses list in form of a dictionary
@@ -125,18 +130,14 @@ def show_history(expenses):
         print()
 
 def ask_for_continuation():
-    question = "Do you want to continue?"
-    question += " (Continue: (yes/y)"
-    question += " | Exit: (any key)) "
+    question = "Do you want add another expense?"
+    question += " (To continue press 'Enter'"
+    question += " | To exit enter any key): "
     return input(question)
 
 def user_continue(user_input):
-    if user_input.lower() in ['yes', 'y']:
-        return True
-    else:
-        print("Exiting the program...")
-        return False
-    
+    # return true if user inputs nothing and false if he enters any key
+    return bool(user_input == '')
 
 if __name__ == "__main__":
     main()
