@@ -29,18 +29,18 @@ A function that renders the menu and prompts the user for a response. And a func
 
 After checking the users input the program checks which option the user chose. 
 
-###### Adding Expense:
+##### Adding Expense:
 The biggest part of the program happens in this part of the program. We ask the user for the amount spent, why and when he spent the money. The program validates the users input and creates an instance of a costom class (Expense). This instance is then used to update the list with prior expenses and written to the local file where the data is stored.
 
 After the expense is added the program asks the user if he wants to continue adding expenses or wants to stop. If he wants to stop he is directed to the main menu again.
 
-###### Showing the history of expenses
+##### Showing the history of expenses:
 In this part of the program we read all expenses from the expense list and render it for the user to see. After rendering the data the user is directed to the main menu again.
 
-###### Exit the program
+##### Exit the program:
 When the user chooses to terminate the program, it tells the user it will exit the program and break the main loop of the program resulting in termination.
 
-###### Misc
+##### Misc:
 For the data storage I opted for a json file as it is easy to implement and is independent of cloud services. It also gives room for improvement where in future versions of the programs it might be possible to add users of the program who all have their own expense file. This will make the program more complex and easier to use for multiple people.
 
 I chose the dictionary data type for ease of use and because it seems to be the appropriate form for expense tracking. Furthermore it made it easier for saving in a JSON file.
