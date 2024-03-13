@@ -43,5 +43,15 @@
     "amount": "123.00",
     "category": "123",
     "date": "2222/22/22"
+  },
+  {
+    "amount": "123.12",
+    "category": "Data",
+    "date": "2024/12/11"
+  },
+  {
+    "amount": "123.00",
+    "category": "Asdfg",
+    "date": "2024/03/22"
   }
 ]

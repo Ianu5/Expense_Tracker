@@ -28,7 +28,9 @@ def main():
         # the user for expenses
             while True:
                 # Prompt the user for their expense
-                amount, category, date = get_amount_category_date()
+                amount = validate_amount()
+                category = validate_category()
+                date = validate_date()
                 expense = Expense(amount, category, date)
 
                 # Add the expense to the list of expenses
@@ -86,19 +88,21 @@ def get_data_from_existing_file():
             expenses = json.load(file)
     return expenses
 
-def get_amount_category_date():
-    # Prompt the user for the spending, date and category of spending
-    # Format the expense amount with 2 after period digits
+def validate_amount():
     while True:
         try:
-            amount = "{:.2f}".format(float(input("Amount spent: ")))
+            amount = input("Amount spent: ")
+            amount = "{:.2f}".format(float(amount))
             break
         except ValueError:
             print("Invalid Input. Input a digits with maximum two decimals")
             continue
+    return amount
 
-    category = input("Reason for spending: ").title()
+def validate_category():
+    return input("Reason for spending: ").title()
 
+def validate_date():
     while True:
         date = input("Date of expense: ")
         found_pattern = re.search(r'^\d{4}/\d{2}/\d{2}$', date)
@@ -107,8 +111,7 @@ def get_amount_category_date():
         else:
             print("Input format: YYYY/MM/DD")
             continue
-
-    return amount, category, date
+    return date
 
 def update_expenses(expenses, expense):
     # Add data to the expenses list in form of a dictionary
