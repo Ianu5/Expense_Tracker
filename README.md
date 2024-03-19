@@ -1,8 +1,7 @@
 # Expense Tracker
 ---
-### Video Demo: 
 ####
-This simple Python program tracks the expenses of the user and saves them in a local file.
+This Python program tracks the expenses of the user and saves them in a local file.
 
 We start the program with the command: python project.py
 
