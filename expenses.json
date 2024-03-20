@@ -53,5 +53,20 @@
     "amount": "123.00",
     "category": "Asdfg",
     "date": "2024/03/22"
+  },
+  {
+    "amount": "12.22",
+    "category": "Vacation",
+    "date": "2024/03/14"
+  },
+  {
+    "amount": "44.99",
+    "category": "Food",
+    "date": "2024/11/05"
+  },
+  {
+    "amount": "500.00",
+    "category": "Fun",
+    "date": "2024/05/25"
   }
 ]
