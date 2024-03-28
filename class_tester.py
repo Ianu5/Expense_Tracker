@@ -1,7 +1,11 @@
-from expense_tracker_classes import User, UserMenu
+from expense_tracker_classes import User, UserMenu, users
 
 
-user = User('Jesaja')
-print(user)
+user = User('Ssaja', 'Hur', 'Jesaja')
+user2 = User('Dillane', 'Badillo', 'Debvy')
 
-print(UserMenu())
+user.save()
+user2.save()
+
+for user in users:
+    print(user)
